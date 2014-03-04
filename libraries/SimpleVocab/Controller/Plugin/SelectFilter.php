@@ -90,6 +90,11 @@ class SimpleVocab_Controller_Plugin_SelectFilter extends Zend_Controller_Plugin_
         // Use the cached vocab terms instead of 
         $terms = explode("\n", $this->_simpleVocabTerms[$args['element']->id]);
         $selectTerms = array('' => 'Select Below') + array_combine($terms, $terms);
+	// fcd1, 03/04/14:
+	// Added line of code below so current value in field is also allowed
+	// If did not do this, the current value would be removed if it was not
+	// one of the terms in the vocabulary
+	$selectTerms[$args['value']] = $args['value'];
         $components['input'] = get_view()->formSelect(
             $args['input_name_stem'] . '[text]', 
             $args['value'], 
