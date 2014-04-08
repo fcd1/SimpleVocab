@@ -70,6 +70,9 @@ class SimpleVocabPlugin extends Omeka_Plugin_AbstractPlugin
     {
         // Restrict access to super and admin users.
         $args['acl']->addResource('SimpleVocab_Index');
+
+	// fcd1, 04/08/14
+	$args['acl']->deny('admin','SimpleVocab_Index');
     }
     
     /**
