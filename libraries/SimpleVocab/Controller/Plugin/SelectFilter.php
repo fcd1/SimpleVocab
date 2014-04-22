@@ -89,16 +89,29 @@ class SimpleVocab_Controller_Plugin_SelectFilter extends Zend_Controller_Plugin_
     {
         // Use the cached vocab terms instead of 
         $terms = explode("\n", $this->_simpleVocabTerms[$args['element']->id]);
-        $selectTerms = array('' => 'Select Below') + array_combine($terms, $terms);
+
 	// fcd1, 03/04/14:
 	// Added line of code below so current value in field is also allowed
 	// If did not do this, the current value would be removed if it was not
 	// one of the terms in the vocabulary
-	$selectTerms[$args['value']] = $args['value'];
+
+	// fcd1, 4/22/14: Add code to change label for deprecated value
+	if ( ($args['value']) && (!in_array($args['value'],$terms)) ) {
+	  //$selectTerms[$args['value']] = '(DEPRECATED!) ' . $args['value'];
+	  $selectTerms = array($args['value'] => '(INVALID VALUE!) ' . $args['value']);
+	  $selectTerms = $selectTerms + array('' => 'Select Below') + array_combine($terms, $terms);
+	  $style = array('style' => 'width: 350px;color:red;');
+	} else {
+	  $selectTerms = array('' => 'Select Below') + array_combine($terms, $terms);
+	  $selectTerms[$args['value']] = $args['value'];
+	  $style = array('style' => 'width: 350px;');
+	}
+
         $components['input'] = get_view()->formSelect(
             $args['input_name_stem'] . '[text]', 
             $args['value'], 
-            array('style' => 'width: 300px;'), 
+	    // fcd1, 4/22/14: set attribs above, according to invalid value or not
+	    $style,
             $selectTerms
         );
         $components['html_checkbox'] = false;
