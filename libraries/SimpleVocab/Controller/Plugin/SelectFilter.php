@@ -91,9 +91,10 @@ class SimpleVocab_Controller_Plugin_SelectFilter extends Zend_Controller_Plugin_
         $terms = explode("\n", $this->_simpleVocabTerms[$args['element']->id]);
 
 	// fcd1, 03/04/14:
-	// Added line of code below so current value in field is also allowed
+	// Add code below so current value in field is also allowed
 	// If did not do this, the current value would be removed if it was not
-	// one of the terms in the vocabulary
+	// one of the terms in the vocabulary - this is the default behavior of
+	// the original SimpleVocab code.
 
 	// fcd1, 4/22/14: Add code to change label for deprecated value
 	if ( ($args['value']) && (!in_array($args['value'],$terms)) ) {
