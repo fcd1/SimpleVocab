@@ -98,7 +98,6 @@ class SimpleVocab_Controller_Plugin_SelectFilter extends Zend_Controller_Plugin_
 
 	// fcd1, 4/22/14: Add code to change label for deprecated value
 	if ( ($args['value']) && (!in_array($args['value'],$terms)) ) {
-	  //$selectTerms[$args['value']] = '(DEPRECATED!) ' . $args['value'];
 	  $selectTerms = array($args['value'] => '(INVALID VALUE!) ' . $args['value']);
 	  $selectTerms = $selectTerms + array('' => 'Select Below') + array_combine($terms, $terms);
 	  $style = array('style' => 'width: 350px;color:red;');
